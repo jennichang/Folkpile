@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "people")
+@Table(name = "Person")
 public class Person {
     @Id // id in our database table
     @GeneratedValue // id is generated for us
