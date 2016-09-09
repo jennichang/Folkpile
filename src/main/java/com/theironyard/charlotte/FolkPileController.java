@@ -26,11 +26,16 @@ public class FolkPileController {
 //        return "Hello, World!";
 //    }
 
+    /** Issues to ask Ben
+     * heroku error with 
+     */
+
+
     // Return either all people, or search of people
     @RequestMapping(path = "/people", method = RequestMethod.GET)
     public List<Person> getPeople(String search) {
         if (search != null) {
-            return (List<Person>) people.findByNameStartsWith(search); // apparently this casting is redundant?
+            return (List<Person>) people.findAllByName(search); // apparently this casting is redundant?
         }
         return (List<Person>) people.findAll();
     }
