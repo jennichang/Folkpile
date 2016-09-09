@@ -10,9 +10,8 @@ public interface PeopleRepository extends CrudRepository<Person, Integer> {
     //List<Person> findAllByName(String name);
 
 
-    @Query("SELECT p FROM people p WHERE p.name LIKE %?1%")
-        // need question mark and position of the parameter passed in
-    List<Person> findByNameStartsWith(String name); //can have customized queries.
+    @Query("SELECT p FROM people p WHERE p.first_name LIKE %?1%")
+    List<Person> findByNameStartsWith(String firstName); //can have customized queries.
 
     //use containing in JPA, won't be a custom query
 }

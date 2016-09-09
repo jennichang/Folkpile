@@ -26,6 +26,15 @@ public class Person {
     @ManyToMany(mappedBy = "people")
     List<Group> groups = new ArrayList<>();
 
+    public Person() {
+    }
+
+    public Person(String firstName, String lastName, String userName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+    }
+
     public int getId() {
         return id;
     }
@@ -55,15 +64,6 @@ public class Person {
         this.userName = userName;
     }
 
-
-    public Person() {
-    }
-
-    public Person(String firstName, String lastName, String userName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userName = userName;
-    }
 
     public Person addGroupToPerson(Group g, CrudRepository repo) { //method takes in a group object and crud repo
         groups.add(g); //groups arraylist, add the group
