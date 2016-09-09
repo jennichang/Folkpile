@@ -9,17 +9,31 @@ import java.util.List;
 @Entity
 @Table(name = "groups")
 public class Group {
-    @Id // id in our database table
-    @GeneratedValue // id is generated for us
-            int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
 
     @Column(nullable = false)
     String name;
 
-    @ManyToMany(mappedBy = "groups")
+    @ManyToMany
+    @JoinTable
     List<Person> people = new ArrayList<>();
 
     public Group(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 

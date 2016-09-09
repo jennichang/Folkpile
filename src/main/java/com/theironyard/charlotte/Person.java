@@ -9,9 +9,9 @@ import java.util.List;
 @Entity
 @Table(name = "people")
 public class Person {
-    @Id // id in our database table
-    @GeneratedValue // id is generated for us
-            int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
 
     @Column(nullable = false)
     String firstName;
@@ -22,16 +22,14 @@ public class Person {
     @Column(nullable = false)
     String userName;
 
-//    @Column(nullable = true)
-//    Integer groupId;
+
+    @ManyToMany(mappedBy = "people")
+    List<Group> groups = new ArrayList<>();
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -57,8 +55,6 @@ public class Person {
         this.userName = userName;
     }
 
-    @ManyToMany(mappedBy = "people")
-    List<Group> groups = new ArrayList<>();
 
     public Person() {
     }
