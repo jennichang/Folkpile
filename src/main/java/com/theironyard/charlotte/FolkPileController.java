@@ -87,6 +87,21 @@ public class FolkPileController {
     }
 
 
+        // Lindsey's:
+//    HashMap<String, ArrayList<Person>> columns = new HashMap<>();
+//
+//    // read file into memory
+//    File f = new File("https://tiycharlotte.slack.com/files/luke/F29JAH1FV/people.csv");
+//    Scanner fileScanner = new Scanner(f);
+//       fileScanner.nextLine();
+//       while (fileScanner.hasNext()) {
+//        String line = fileScanner.nextLine();
+//        String[] columns = line.split(",");
+//        Person person = new Person(Integer.valueOf(columns[0]), columns[1], columns[2], columns[3],
+//                columns[4], columns[5]);
+//    }
+
+
     @PostConstruct
     public void init() throws FileNotFoundException {
         if (people.count() == 0) {
