@@ -12,8 +12,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
-@RestController //instead of responding as html and accepting form data -- indicates we are interacting with endpoints
-//over rest.
+@RestController
 public class FolkPileController {
     @Autowired
     PeopleRepository people;
@@ -36,30 +35,36 @@ public class FolkPileController {
         return (List<Person>) people.findAll();
     }
 
-
     //Get all groups
     @RequestMapping(path = "/group", method = RequestMethod.GET)
     public List<Group> getGroup() {
         return (List<Group>) groups.findAll();
     }
 
+    //Add person to group -- and group to person
+    @RequestMapping(path = "/group/{id}", method = RequestMethod.PUT)
+    public void addPersonToGroup(@PathVariable("id") int id, @RequestBody Person person) {
+        Group g = groups.findOne(id);
+        g.person.add(person);
+        groups.save(g); //think this adds a person to the group
 
-    @RequestMapping(path = "/people/{groupId}", method = RequestMethod.GET)
-    public List<Person> getPeople(@PathVariable("groupId") int groupId) {
-        return people.findAllByGroup(groupId);
+        Person p = people.findOne(person.getId());
+        p.group.add(groups.findOne(id));
+        people.save(p); //have to update the people table too though right?
     }
+
 
     @PostConstruct
     public void init() throws FileNotFoundException {
-        if (people.count() == 0) { //only parse if the customer repository is empty
-            File f = new File("people.csv"); // create new file from csv
-            Scanner fileScanner = new Scanner(f); // scanner to read that file
-            fileScanner.nextLine(); // ignore first line since is header
-            while (fileScanner.hasNext()) { // while there is a token to be read on next line
-                String line = fileScanner.nextLine(); //turn that line into a string
-                String[] columns = line.split(","); // turn that string into an array, split by comma
-                Person personObject = new Person(columns[0], columns[1], columns[2], null);
-                people.save(personObject); //save that object to the customer repo
+        if (people.count() == 0) {
+            File f = new File("people.csv");
+            Scanner fileScanner = new Scanner(f);
+            fileScanner.nextLine();
+            while (fileScanner.hasNext()) {
+                String line = fileScanner.nextLine();
+                String[] columns = line.split(",");
+                Person personObject = new Person(columns[0], columns[1], columns[2], null); // can i have a null here?
+                people.save(personObject);
             }
         }
         if (groups.count() == 0) {

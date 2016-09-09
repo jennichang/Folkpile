@@ -10,8 +10,7 @@ public interface PeopleRepository extends CrudRepository<Person, Integer> {
     List<Person> findAllByGroup(int groupId);
 
 
-    @Query("SELECT p FROM Person p")
-//    @Query("SELECT p FROM people p WHERE p.name LIKE %?1%")
+    @Query("SELECT p FROM people p WHERE p.name LIKE %?1%")
         // need question mark and position of the parameter passed in
     List<Person> findByNameStartsWith(String name); //can have customized queries.
 
