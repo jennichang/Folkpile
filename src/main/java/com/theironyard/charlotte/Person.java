@@ -35,6 +35,10 @@ public class Person {
         this.userName = userName;
     }
 
+    public List<Group> getGroups() {
+        return groups;
+    }
+
     public int getId() {
         return id;
     }
