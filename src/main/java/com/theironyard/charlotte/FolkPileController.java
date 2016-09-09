@@ -32,6 +32,10 @@ public class FolkPileController {
      * heroku error -- Caused by: org.hibernate.AnnotationException:
         Illegal use of mappedBy on both sides of the relationship: com.theironyard.charlotte.Person.groups
 
+        then i reset the database and error is:
+             Caused by: java.lang.IllegalArgumentException: org.hibernate.hql.internal.ast.QuerySyntaxException: people
+            is not mapped [SELECT p FROM people p WHERE p.name LIKE ?1]
+
      * can i have null in my saved file? -- i deleted the null now
 
      * is update completely wrong? -- updated after seeing Ben's example
