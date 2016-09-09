@@ -27,11 +27,29 @@ public class FolkPileController {
         return "Hello, World!";
     }
 
-    /** Issues to ask Ben
-     * heroku error with people is not mapped
+    /**
+     * Issues to ask Ben:
+     * heroku error -- Caused by: org.hibernate.AnnotationException:
+        Illegal use of mappedBy on both sides of the relationship: com.theironyard.charlotte.Person.groups
+
      * can i have null in my saved file? -- i deleted the null now
+
      * is update completely wrong? -- updated after seeing Ben's example
-     * error when running in intellij as well (Caused by: java.lang.IllegalArgumentException: URL must start with 'jdbc')
+
+     * error when running in intellij as well
+        org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name
+        'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration': Unsatisfied dependency expressed
+        through constructor parameter 0: Error creating bean with name 'dataSource' defined in class path resource
+        [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Tomcat.class]: Bean instantiation via factory method
+        failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate
+        [org.apache.tomcat.jdbc.pool.DataSource]: Factory method 'dataSource'
+        threw exception; nested exception is java.lang.IllegalArgumentException: URL must start with 'jdbc';
+        nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name
+        'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Tomcat.class]:
+        Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException:
+        Failed to instantiate [org.apache.tomcat.jdbc.pool.DataSource]: Factory method 'dataSource' threw exception; nested exception
+        is java.lang.IllegalArgumentException: URL must start with 'jdbc'
+
      * search will have a url like this, correct? "/people/?=oli"
      */
 
@@ -52,7 +70,7 @@ public class FolkPileController {
     }
 
     //Add person to group -- and group to person
-    @RequestMapping(path = "/group/{id}", method = RequestMethod.PUT) // should this actually be the new methods created?
+    @RequestMapping(path = "/group/{id}", method = RequestMethod.PUT)
     public void addPersonToGroup(@PathVariable("id") int id, @RequestBody Person person) {
 
         //what i originally had
@@ -87,7 +105,7 @@ public class FolkPileController {
     }
 
 
-        // Lindsey's:
+    // Lindsey's:
 //    HashMap<String, ArrayList<Person>> columns = new HashMap<>();
 //
 //    // read file into memory
@@ -111,7 +129,7 @@ public class FolkPileController {
             while (fileScanner.hasNext()) {
                 String line = fileScanner.nextLine();
                 String[] columns = line.split(",");
-                Person personObject = new Person(columns[0], columns[1], columns[2]); // can i have a null here?
+                Person personObject = new Person(columns[0], columns[1], columns[2]);
                 people.save(personObject);
             }
         }

@@ -23,6 +23,9 @@ public class Group {
         this.name = name;
     }
 
+    public Group() {
+    }
+
     public Group addPersonToGroup(Person a, CrudRepository repo) {
         people.add(a);
         a.groups.add(this);

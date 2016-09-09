@@ -60,6 +60,8 @@ public class Person {
     @ManyToMany(mappedBy = "people")
     List<Group> groups = new ArrayList<>();
 
+    public Person() {
+    }
 
     public Person(String firstName, String lastName, String userName) {
         this.firstName = firstName;
