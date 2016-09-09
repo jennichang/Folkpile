@@ -1,6 +1,7 @@
 package com.theironyard.charlotte;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -54,8 +55,8 @@ public class Person {
         this.userName = userName;
     }
 
-    @ManyToMany
-    List<Group> group;
+    @ManyToMany(mappedBy = "people")
+    List<Group> group = new ArrayList<>();
 
 
     public Person(String firstName, String lastName, String userName, List<Group> group) {
