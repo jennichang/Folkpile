@@ -20,11 +20,11 @@ public class FolkPileController {
     @Autowired
     GroupRepository groups;
 
-//    @RequestMapping(path = "/")
-//    @ResponseBody
-//    String home() {
-//        return "Hello, World!";
-//    }
+    @RequestMapping(path = "/")
+    @ResponseBody
+    String home() {
+        return "Hello, World!";
+    }
 
     /** Issues to ask Ben
      * heroku error with people is not mapped
