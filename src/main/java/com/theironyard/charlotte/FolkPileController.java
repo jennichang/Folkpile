@@ -27,7 +27,11 @@ public class FolkPileController {
 //    }
 
     /** Issues to ask Ben
-     * heroku error with 
+     * heroku error with people is not mapped
+     * can i have null in my saved file?
+     * is update completely wrong?
+     * error when running in intellij as well (error starting application context)
+     * search will have a url like this, correct? "/people/?=oli"
      */
 
 
@@ -35,7 +39,7 @@ public class FolkPileController {
     @RequestMapping(path = "/people", method = RequestMethod.GET)
     public List<Person> getPeople(String search) {
         if (search != null) {
-            return (List<Person>) people.findAllByName(search); // apparently this casting is redundant?
+            return (List<Person>) people.findByNameStartsWith(search); // apparently this casting is redundant?
         }
         return (List<Person>) people.findAll();
     }
