@@ -1,4 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
+.env
 target/
 .idea/workspace.xml
 .idea/libraries
