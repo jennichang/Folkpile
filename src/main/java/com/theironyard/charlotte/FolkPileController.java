@@ -1,16 +1,17 @@
 package com.theironyard.charlotte;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 
 @RestController
 public class FolkPileController {
@@ -28,9 +29,9 @@ public class FolkPileController {
 
     /** Issues to ask Ben
      * heroku error with people is not mapped
-     * can i have null in my saved file?
-     * is update completely wrong?
-     * error when running in intellij as well (error starting application context)
+     * can i have null in my saved file? -- i deleted the null now
+     * is update completely wrong? -- updated after seeing Ben's example
+     * error when running in intellij as well (Caused by: java.lang.IllegalArgumentException: URL must start with 'jdbc')
      * search will have a url like this, correct? "/people/?=oli"
      */
 
@@ -51,15 +52,38 @@ public class FolkPileController {
     }
 
     //Add person to group -- and group to person
-    @RequestMapping(path = "/group/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path = "/group/{id}", method = RequestMethod.PUT) // should this actually be the new methods created?
     public void addPersonToGroup(@PathVariable("id") int id, @RequestBody Person person) {
-        Group g = groups.findOne(id);
-        g.person.add(person);
-        groups.save(g); //think this adds a person to the group
 
-        Person p = people.findOne(person.getId());
-        p.group.add(groups.findOne(id));
-        people.save(p); //have to update the people table too though right?
+        //what i originally had
+//        Group g = groups.findOne(id);
+//        g.people.add(person);
+//        groups.save(g); //think this adds a person to the group
+
+//        Person p = people.findOne(person.getId());
+//        p.groups.add(groups.findOne(id));
+//        people.save(p); //have to update the people table too though right?
+
+        //based on ben's
+        Person p = person; //this is the person object to be updated
+        Group g = groups.findOne(id); // this is the group object to be updated
+
+        g.addPersonToGroup(p, groups); // adding the person to be updated to the group repo
+        p.addGroupToPerson(g, people); // adding the group to the person to be updated in the people repo
+
+
+//        List<Person> home() {
+//            Person p = new Person("Ben"); // created a new person object
+//            Address a = new Address("Butts"); // create a new address object
+//
+//            addresses.save(a); //saved the address object to the addresses table
+//            people.save(p); // saved the person object to the people table
+//
+//            a.addPersonToAddress(p, addresses); // then for that address object, added the person object to the addresses repo
+//
+//            return (List)people.findAll();
+//        }
+
     }
 
 
@@ -72,16 +96,16 @@ public class FolkPileController {
             while (fileScanner.hasNext()) {
                 String line = fileScanner.nextLine();
                 String[] columns = line.split(",");
-                Person personObject = new Person(columns[0], columns[1], columns[2], null); // can i have a null here?
+                Person personObject = new Person(columns[0], columns[1], columns[2]); // can i have a null here?
                 people.save(personObject);
             }
         }
         if (groups.count() == 0) {
-            Group lumberjack = new Group("Lumberjacks Club", null);
+            Group lumberjack = new Group("Lumberjacks Club");
             groups.save(lumberjack);
-            Group friends = new Group("Friends", null);
+            Group friends = new Group("Friends");
             groups.save(friends);
-            Group pb = new Group("Potential Babysitters", null);
+            Group pb = new Group("Potential Babysitters");
             groups.save(pb);
         }
 

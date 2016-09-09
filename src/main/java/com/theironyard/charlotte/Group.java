@@ -1,5 +1,7 @@
 package com.theironyard.charlotte;
 
+import org.springframework.data.repository.CrudRepository;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +17,17 @@ public class Group {
     String name;
 
     @ManyToMany(mappedBy = "groups")
-    List<Person> person = new ArrayList<>();
+    List<Person> people = new ArrayList<>();
 
-    public Group(String name, List<Person> person) {
+    public Group(String name) {
         this.name = name;
-        this.person = person;
+    }
+
+    public Group addPersonToGroup(Person a, CrudRepository repo) {
+        people.add(a);
+        a.groups.add(this);
+
+        repo.save(this);
+        return this;
     }
 }
