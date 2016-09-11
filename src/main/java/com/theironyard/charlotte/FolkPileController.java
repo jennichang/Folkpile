@@ -84,8 +84,7 @@ public class FolkPileController {
     @RequestMapping(path = "/group/{id}", method = RequestMethod.PUT)
     public void addPersonToGroup(@PathVariable("id") int id, @RequestBody Person person) {
 
-
-        //based on ben's
+        
         Person p = person; //this is the person object to be updated
         Group g = groups.findOne(id); // this is the group object to be updated
 
