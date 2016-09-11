@@ -74,7 +74,7 @@ public class FolkPileController {
     }
 
     //Get specific groups
-    @RequestMapping(path = "/group{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/group/{id}", method = RequestMethod.GET)
     public List<Group> getSpecificGroup(@PathVariable("id") int id) {
         return (List<Group>) groups.findOne(id);
     }
