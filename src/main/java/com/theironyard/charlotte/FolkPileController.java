@@ -80,17 +80,10 @@ public class FolkPileController {
     }
 
     //Add person to group -- and group to person
+    @CrossOrigin
     @RequestMapping(path = "/group/{id}", method = RequestMethod.PUT)
     public void addPersonToGroup(@PathVariable("id") int id, @RequestBody Person person) {
 
-        //what i originally had
-//        Group g = groups.findOne(id);
-//        g.people.add(person);
-//        groups.save(g); //think this adds a person to the group
-
-//        Person p = people.findOne(person.getId());
-//        p.groups.add(groups.findOne(id));
-//        people.save(p); //have to update the people table too though right?
 
         //based on ben's
         Person p = person; //this is the person object to be updated
