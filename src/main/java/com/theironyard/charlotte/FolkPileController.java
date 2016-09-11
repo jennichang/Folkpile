@@ -73,6 +73,12 @@ public class FolkPileController {
         return (List<Group>) groups.findAll();
     }
 
+    //Get specific groups
+    @RequestMapping(path = "/group{id}", method = RequestMethod.GET)
+    public List<Group> getSpecificGroup(@PathVariable("id") int id) {
+        return (List<Group>) groups.findOne(id);
+    }
+
     //Add person to group -- and group to person
     @RequestMapping(path = "/group/{id}", method = RequestMethod.PUT)
     public void addPersonToGroup(@PathVariable("id") int id, @RequestBody Person person) {
