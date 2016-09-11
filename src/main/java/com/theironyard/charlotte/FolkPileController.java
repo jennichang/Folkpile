@@ -80,11 +80,10 @@ public class FolkPileController {
     }
 
     //Add person to group -- and group to person
-    @CrossOrigin
     @RequestMapping(path = "/group/{id}", method = RequestMethod.PUT)
     public void addPersonToGroup(@PathVariable("id") int id, @RequestBody Person person) {
 
-        
+
         Person p = person; //this is the person object to be updated
         Group g = groups.findOne(id); // this is the group object to be updated
 
