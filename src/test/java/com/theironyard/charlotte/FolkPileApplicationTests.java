@@ -19,11 +19,16 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration
 public class FolkPileApplicationTests {
 
-    @Autowired //start test by created web application context, run our tests, need to pretened we're actually running a web application
+    @Autowired //start test by created web application context, run our tests, need to pretened
+            // we're actually running a web application
             WebApplicationContext wap;
 
     @Autowired
     PeopleRepository people;
+
+    @Autowired
+    PeopleRepository groups;
+
 
     MockMvc mockMvc; // mock = object taht preteneds to perform a task, but doesn't really perform that task.
     //can tell mock object to do things you would normally, but it will return a predictable result
