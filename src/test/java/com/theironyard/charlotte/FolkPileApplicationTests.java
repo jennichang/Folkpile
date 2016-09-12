@@ -45,7 +45,7 @@ public class FolkPileApplicationTests {
         String json = mapper.writeValueAsString(person); //serializing user object. write the value as a string
 
         mockMvc.perform( //performing a mvc request to web application using mockmvc field
-                MockMvcRequestBuilders.post("/user") // if you want to build a request start with mockmvcrequestbuilders
+                MockMvcRequestBuilders.post("/people") // if you want to build a request start with mockmvcrequestbuilders
                         .content(json)
                         .contentType("application/json")
         );
