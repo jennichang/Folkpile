@@ -1,6 +1,7 @@
 package com.theironyard.charlotte;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.persistence.*;
@@ -25,7 +26,7 @@ public class Person {
 
 
     @ManyToMany(mappedBy = "people")
-            //@JsonBackReference
+    @JsonManagedReference
     List<Group> groups = new ArrayList<>();
 
     public Person() {
