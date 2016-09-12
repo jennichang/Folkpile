@@ -9,9 +9,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "groups")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Group {
 
     @ManyToMany
     @JoinTable
-    //@JsonBackReference
+    @JsonBackReference
     //@JsonIgnore
     List<Person> people = new ArrayList<>();
 
