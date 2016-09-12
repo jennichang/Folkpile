@@ -1,7 +1,9 @@
 package com.theironyard.charlotte;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.persistence.*;
@@ -10,6 +12,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "people")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

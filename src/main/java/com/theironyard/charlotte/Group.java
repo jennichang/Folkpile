@@ -1,9 +1,6 @@
 package com.theironyard.charlotte;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.persistence.*;
@@ -12,6 +9,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "groups")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Group {
 
     @ManyToMany
     @JoinTable
-    @JsonBackReference
+    //@JsonBackReference
     //@JsonIgnore
     List<Person> people = new ArrayList<>();
 
