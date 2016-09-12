@@ -1,5 +1,6 @@
 package com.theironyard.charlotte;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.persistence.*;
@@ -18,11 +19,12 @@ public class Group {
 
     @ManyToMany
     @JoinTable
+            @JsonManagedReference
     List<Person> people = new ArrayList<>();
 
-//    public List<Person> getPeople() {
-//        return people;
-//    }
+    public List<Person> getPeople() {
+        return people;
+    }
 
     public Group(String name) {
         this.name = name;
