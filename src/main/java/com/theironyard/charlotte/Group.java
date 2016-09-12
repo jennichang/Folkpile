@@ -19,7 +19,7 @@ public class Group {
 
     @ManyToMany
     @JoinTable
-            @JsonManagedReference
+            //@JsonManagedReference
     List<Person> people = new ArrayList<>();
 
     public List<Person> getPeople() {

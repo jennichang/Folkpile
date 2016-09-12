@@ -25,7 +25,7 @@ public class Person {
 
 
     @ManyToMany(mappedBy = "people")
-            @JsonBackReference
+            //@JsonBackReference
     List<Group> groups = new ArrayList<>();
 
     public Person() {
