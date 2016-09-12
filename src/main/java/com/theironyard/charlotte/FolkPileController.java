@@ -90,7 +90,7 @@ public class FolkPileController {
 
 
         g.addPersonToGroup(p, groups); // adding the person to be updated to the group repo
-        //p.addGroupToPerson(g, people); // adding the group to the person to be updated in the people repo
+        p.addGroupToPerson(g, people); // adding the group to the person to be updated in the people repo
 
 
         //Try1:
