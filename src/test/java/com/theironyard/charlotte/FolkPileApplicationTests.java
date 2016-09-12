@@ -12,6 +12,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,54 +34,71 @@ public class FolkPileApplicationTests {
     MockMvc mockMvc; // mock = object taht preteneds to perform a task, but doesn't really perform that task.
     //can tell mock object to do things you would normally, but it will return a predictable result
 
-    @Test
-    public void addPerson() throws Exception { // test addition of a user
-        int originalCount = (int) people.count();
-
-        Person person = new Person(); //make new user object
-        person.setFirstName("Jennifer"); // use setters to set fields
-        person.setLastName("Chang");
-        person.setUserName("blah@gmail.com");
-
-        ObjectMapper mapper = new ObjectMapper(); //object mapper = part of spring framework to build json objects for testing
-        // basically gson for spring
-        String json = mapper.writeValueAsString(person); //serializing user object. write the value as a string
-
-        mockMvc.perform( //performing a mvc request to web application using mockmvc field
-                MockMvcRequestBuilders.post("/people") // if you want to build a request start with mockmvcrequestbuilders
-                        .content(json)
-                        .contentType("application/json")
-        );
-
-        people.save(person);
-
-        Assert.assertEquals(originalCount + 1, people.count());
-
-    }
+//    @Test
+//    public void addPerson() throws Exception { // test addition of a user
+//        int originalCount = (int) people.count();
 //
-//        @Test
-//        public void testUpdate() throws Exception {
-//            addPerson();
+//        Person person = new Person(); //make new user object
+//        person.setFirstName("Jennifer"); // use setters to set fields
+//        person.setLastName("Chang");
+//        person.setUserName("blah@gmail.com");
 //
-//            ObjectMapper mapper = new ObjectMapper(); //object mapper = part of spring framework to build json objects for testing
-//            // basically gson for spring
-//            String json = mapper.writeValueAsString(person); //serializing user object. write the value as a string
+//        ObjectMapper mapper = new ObjectMapper(); //object mapper = part of spring framework to build json objects for testing
+//        // basically gson for spring
+//        String json = mapper.writeValueAsString(person); //serializing user object. write the value as a string
 //
-//            mockMvc.perform( //performing a mvc request to web application using mockmvc field
-//                    MockMvcRequestBuilders.put("/group/{id}") // if you want to build a request start with mockmvcrequestbuilders
-//                            .content(json)
-//                            .contentType("application/json")
-//            );
+//        // this was doing nothing....
+////        mockMvc.perform( //performing a mvc request to web application using mockmvc field
+////                MockMvcRequestBuilders.post("/people") // if you want to build a request start with mockmvcrequestbuilders
+////                        .content(json)
+////                        .contentType("application/json")
+////        );
+//
+//        people.save(person);
+//
+//        Assert.assertEquals(originalCount + 1, people.count());
 //
 //    }
-
-
-
+//
+//    @Test
+//    public void updateGroup() throws Exception {
+//        Person person = new Person(); //make new user object
+//        person.setFirstName("Jennifer"); // use setters to set fields
+//        person.setLastName("Chang");
+//        person.setUserName("blah@gmail.com");
+//
+//        mockMvc.perform(
+//                MockMvcRequestBuilders.put("/group/1")
+//
+//        );
+//
+//        Assert.assertTrue(groups.count() == 1);
+//    }
 
 
     @Before // this will run before our test runs.  initialize build mockmvc object based off of webappcontext
     public void before() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wap).build();
     }
+
+    @Test
+    @Transactional
+    public void addPersonToGroups() throws Exception {
+        Person p = people.findOne(1);
+
+        int groupCount = p.getGroups().size();
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(p); //serializing user object. write the value as a string
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/group/{id}", "1")
+                        .content(json)
+                        .contentType("application/json")
+        );
+
+        Assert.assertEquals((groupCount + 1), p.getGroups().size());
+    }
+
 
 }
