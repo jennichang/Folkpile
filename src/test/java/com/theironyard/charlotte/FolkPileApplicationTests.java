@@ -57,22 +57,22 @@ public class FolkPileApplicationTests {
         Assert.assertEquals(originalCount + 1, people.count());
 
     }
-
-        @Test
-        public void testUpdate() throws Exception {
-            addPerson();
-
-            ObjectMapper mapper = new ObjectMapper(); //object mapper = part of spring framework to build json objects for testing
-            // basically gson for spring
-            String json = mapper.writeValueAsString(person); //serializing user object. write the value as a string
-
-            mockMvc.perform( //performing a mvc request to web application using mockmvc field
-                    MockMvcRequestBuilders.put("/group/{id}") // if you want to build a request start with mockmvcrequestbuilders
-                            .content(json)
-                            .contentType("application/json")
-            );
-
-    }
+//
+//        @Test
+//        public void testUpdate() throws Exception {
+//            addPerson();
+//
+//            ObjectMapper mapper = new ObjectMapper(); //object mapper = part of spring framework to build json objects for testing
+//            // basically gson for spring
+//            String json = mapper.writeValueAsString(person); //serializing user object. write the value as a string
+//
+//            mockMvc.perform( //performing a mvc request to web application using mockmvc field
+//                    MockMvcRequestBuilders.put("/group/{id}") // if you want to build a request start with mockmvcrequestbuilders
+//                            .content(json)
+//                            .contentType("application/json")
+//            );
+//
+//    }
 
 
 
