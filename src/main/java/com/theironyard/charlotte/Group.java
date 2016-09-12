@@ -22,9 +22,10 @@ public class Group {
     @ManyToMany
     @JoinTable
     //@JsonBackReference
+    @JsonIgnore
     List<Person> people = new ArrayList<>();
 
-    //@JsonIgnore
+
     public List<Person> getPeople() {
         return people;
     }
