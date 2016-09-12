@@ -34,8 +34,8 @@ public class FolkPileApplicationTests {
     //can tell mock object to do things you would normally, but it will return a predictable result
 
     @Test
-    public void updatePerson() throws Exception { // test addition of a user
-        int originalCount = (int)people.count();
+    public void addPerson() throws Exception { // test addition of a user
+        int originalCount = (int) people.count();
 
         Person person = new Person(); //make new user object
         person.setFirstName("Jennifer"); // use setters to set fields
@@ -55,8 +55,28 @@ public class FolkPileApplicationTests {
         people.save(person);
 
         Assert.assertEquals(originalCount + 1, people.count());
-        // after post data to user endpoint, we know we should have 1 user in database, if we do we succeeded
+
     }
+
+        @Test
+        public void testUpdate() throws Exception {
+            addPerson();
+
+            ObjectMapper mapper = new ObjectMapper(); //object mapper = part of spring framework to build json objects for testing
+            // basically gson for spring
+            String json = mapper.writeValueAsString(person); //serializing user object. write the value as a string
+
+            mockMvc.perform( //performing a mvc request to web application using mockmvc field
+                    MockMvcRequestBuilders.put("/group/{id}") // if you want to build a request start with mockmvcrequestbuilders
+                            .content(json)
+                            .contentType("application/json")
+            );
+
+    }
+
+
+
+
 
     @Before // this will run before our test runs.  initialize build mockmvc object based off of webappcontext
     public void before() {

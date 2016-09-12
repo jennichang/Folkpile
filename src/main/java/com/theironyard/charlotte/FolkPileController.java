@@ -89,9 +89,10 @@ public class FolkPileController {
         Person p = people.findOne(person.id); //this is the person object to be updated
         Group g = groups.findOne(id); // this is the group object to be updated
 
-
-        g.addPersonToGroup(p, groups); // adding the person to be updated to the group repo
-        //p.addGroupToPerson(g, people); // adding the group to the person to be updated in the people repo
+        if(!p.getGroups().contains(g)) {
+            g.addPersonToGroup(p, groups); // adding the person to be updated to the group repo
+            //p.addGroupToPerson(g, people); // adding the group to the person to be updated in the people repo
+        }
 
 
         //Try1:
