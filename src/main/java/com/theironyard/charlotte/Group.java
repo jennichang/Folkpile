@@ -1,6 +1,7 @@
 package com.theironyard.charlotte;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.repository.CrudRepository;
@@ -22,7 +23,7 @@ public class Group {
     @ManyToMany
     @JoinTable
     //@JsonBackReference
-    @JsonIgnore
+    //@JsonIgnore
     List<Person> people = new ArrayList<>();
 
 
