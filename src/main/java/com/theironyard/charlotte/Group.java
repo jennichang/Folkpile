@@ -22,17 +22,18 @@ public class Group {
 
     @ManyToMany
     @JoinTable
-    @JsonBackReference
-    //@JsonIgnore
     List<Person> people = new ArrayList<>();
 
-
-    public List<Person> getPeople() {
-        return people;
+    public Group() {
     }
 
     public Group(String name) {
         this.name = name;
+    }
+
+    @JsonIgnore
+    public List<Person> getPeople() {
+        return people;
     }
 
     public int getId() {
@@ -46,9 +47,6 @@ public class Group {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Group() {
     }
 
     public Group addPersonToGroup(Person a, CrudRepository repo) {

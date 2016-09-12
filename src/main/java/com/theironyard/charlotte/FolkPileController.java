@@ -1,5 +1,6 @@
 package com.theironyard.charlotte;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,12 +86,12 @@ public class FolkPileController {
     public void addPersonToGroup(@PathVariable("id") int id, @RequestBody Person person) {
 
         //Original based on Ben's
-        Person p = person; //this is the person object to be updated
+        Person p = people.findOne(person.id); //this is the person object to be updated
         Group g = groups.findOne(id); // this is the group object to be updated
 
 
         g.addPersonToGroup(p, groups); // adding the person to be updated to the group repo
-        p.addGroupToPerson(g, people); // adding the group to the person to be updated in the people repo
+        //p.addGroupToPerson(g, people); // adding the group to the person to be updated in the people repo
 
 
         //Try1:
@@ -102,9 +103,6 @@ public class FolkPileController {
 //                Person p = people.findOne(person.getId());
 //                p.groups.add(groups.findOne(id));
 //                people.save(p); //have to update the people table too though right?
-
-
-
     }
 
 

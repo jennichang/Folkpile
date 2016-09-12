@@ -35,6 +35,8 @@ public class FolkPileApplicationTests {
 
     @Test
     public void updatePerson() throws Exception { // test addition of a user
+        int originalCount = (int)people.count();
+
         Person person = new Person(); //make new user object
         person.setFirstName("Jennifer"); // use setters to set fields
         person.setLastName("Chang");
@@ -50,7 +52,9 @@ public class FolkPileApplicationTests {
                         .contentType("application/json")
         );
 
-        Assert.assertTrue(people.count() == 1);
+        people.save(person);
+
+        Assert.assertEquals(originalCount + 1, people.count());
         // after post data to user endpoint, we know we should have 1 user in database, if we do we succeeded
     }
 

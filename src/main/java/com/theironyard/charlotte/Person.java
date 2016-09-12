@@ -31,7 +31,7 @@ public class Person {
 
 
     @ManyToMany(mappedBy = "people")
-    @JsonManagedReference
+//    @JsonManagedReference
     List<Group> groups = new ArrayList<>();
 
     public Person() {
