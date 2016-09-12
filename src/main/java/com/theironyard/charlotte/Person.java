@@ -77,13 +77,14 @@ public class Person {
     }
 
 
-    public Person addGroupToPerson(Group g, CrudRepository repo) { //method takes in a group object and crud repo
-        groups.add(g); //groups arraylist, add the group
-        g.people.add(this); // then in the group object's people arraylist, add this person
-
-        repo.save(this);
-        return this;
-    }
+    // redundant, not needed
+//    public Person addGroupToPerson(Group g, CrudRepository repo) { //method takes in a group object and crud repo
+//        groups.add(g); //groups arraylist, add the group
+//        g.people.add(this); // then in the group object's people arraylist, add this person
+//
+//        repo.save(this);
+//        return this;
+//    }
 }
 
 

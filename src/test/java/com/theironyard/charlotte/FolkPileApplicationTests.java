@@ -20,61 +20,15 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration
 public class FolkPileApplicationTests {
 
-    @Autowired //start test by created web application context, run our tests, need to pretened
-            // we're actually running a web application
+    @Autowired //start test by creating web application context, we need to pretend we're actually running a web application
             WebApplicationContext wap;
 
     @Autowired
     PeopleRepository people;
 
-    @Autowired
-    PeopleRepository groups;
 
-
-    MockMvc mockMvc; // mock = object taht preteneds to perform a task, but doesn't really perform that task.
+    MockMvc mockMvc; // mock = object that pretends to perform a task, but doesn't really perform that task.
     //can tell mock object to do things you would normally, but it will return a predictable result
-
-//    @Test
-//    public void addPerson() throws Exception { // test addition of a user
-//        int originalCount = (int) people.count();
-//
-//        Person person = new Person(); //make new user object
-//        person.setFirstName("Jennifer"); // use setters to set fields
-//        person.setLastName("Chang");
-//        person.setUserName("blah@gmail.com");
-//
-//        ObjectMapper mapper = new ObjectMapper(); //object mapper = part of spring framework to build json objects for testing
-//        // basically gson for spring
-//        String json = mapper.writeValueAsString(person); //serializing user object. write the value as a string
-//
-//        // this was doing nothing....
-////        mockMvc.perform( //performing a mvc request to web application using mockmvc field
-////                MockMvcRequestBuilders.post("/people") // if you want to build a request start with mockmvcrequestbuilders
-////                        .content(json)
-////                        .contentType("application/json")
-////        );
-//
-//        people.save(person);
-//
-//        Assert.assertEquals(originalCount + 1, people.count());
-//
-//    }
-//
-//    @Test
-//    public void updateGroup() throws Exception {
-//        Person person = new Person(); //make new user object
-//        person.setFirstName("Jennifer"); // use setters to set fields
-//        person.setLastName("Chang");
-//        person.setUserName("blah@gmail.com");
-//
-//        mockMvc.perform(
-//                MockMvcRequestBuilders.put("/group/1")
-//
-//        );
-//
-//        Assert.assertTrue(groups.count() == 1);
-//    }
-
 
     @Before // this will run before our test runs.  initialize build mockmvc object based off of webappcontext
     public void before() {
@@ -82,14 +36,15 @@ public class FolkPileApplicationTests {
     }
 
     @Test
-    @Transactional
+    @Transactional //defines the scope of a single database transaction. The database transaction happens inside
+    // the scope of a persistence context ... but why do we need this in this test but not others?
     public void addPersonToGroups() throws Exception {
         Person p = people.findOne(1);
 
         int groupCount = p.getGroups().size();
 
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(p); //serializing user object. write the value as a string
+        String json = mapper.writeValueAsString(p); //serializing person object. write the value as a string
 
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/group/{id}", "1")
@@ -97,7 +52,7 @@ public class FolkPileApplicationTests {
                         .contentType("application/json")
         );
 
-        Assert.assertEquals((groupCount + 1), p.getGroups().size());
+        Assert.assertEquals((groupCount + 1), p.getGroups().size()); // test passes if group size is the original size plus 1
     }
 
 

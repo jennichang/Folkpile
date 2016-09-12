@@ -25,39 +25,8 @@ public class FolkPileController {
     @RequestMapping(path = "/")
     @ResponseBody
     String home() {
-        return "Hello, World!";
+        return "Homepage For FolkPile";
     }
-
-    /**
-     * Issues to ask Ben:
-     * heroku error -- Caused by: org.hibernate.AnnotationException:
-        Illegal use of mappedBy on both sides of the relationship: com.theironyard.charlotte.Person.groups
-
-        then i reset the database and error is:
-             Caused by: java.lang.IllegalArgumentException: org.hibernate.hql.internal.ast.QuerySyntaxException: people
-            is not mapped [SELECT p FROM people p WHERE p.name LIKE ?1]
-
-     * can i have null in my saved file? -- i deleted the null now
-
-     * is update completely wrong? -- updated after seeing Ben's example
-
-     * error when running in intellij as well
-        org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name
-        'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration': Unsatisfied dependency expressed
-        through constructor parameter 0: Error creating bean with name 'dataSource' defined in class path resource
-        [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Tomcat.class]: Bean instantiation via factory method
-        failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate
-        [org.apache.tomcat.jdbc.pool.DataSource]: Factory method 'dataSource'
-        threw exception; nested exception is java.lang.IllegalArgumentException: URL must start with 'jdbc';
-        nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name
-        'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Tomcat.class]:
-        Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException:
-        Failed to instantiate [org.apache.tomcat.jdbc.pool.DataSource]: Factory method 'dataSource' threw exception; nested exception
-        is java.lang.IllegalArgumentException: URL must start with 'jdbc'
-
-     * search will have a url like this, correct? "/people/?=oli"
-     */
-
 
     // Return either all people, or search of people
     @RequestMapping(path = "/people", method = RequestMethod.GET)
@@ -80,22 +49,19 @@ public class FolkPileController {
         return groups.findOne(id);
     }
 
-    //Add person to group -- and group to person
+    //Add person to group
     @CrossOrigin
     @RequestMapping(path = "/group/{id}", method = RequestMethod.PUT)
     public void addPersonToGroup(@PathVariable("id") int id, @RequestBody Person person) {
 
-        //Original based on Ben's
         Person p = people.findOne(person.id); //this is the person object to be updated
         Group g = groups.findOne(id); // this is the group object to be updated
 
-        if(!p.getGroups().contains(g)) {
+        if (!p.getGroups().contains(g)) { // so one person cannot have the same group added multiple times
             g.addPersonToGroup(p, groups); // adding the person to be updated to the group repo
-            //p.addGroupToPerson(g, people); // adding the group to the person to be updated in the people repo
+            //p.addGroupToPerson(g, people); // adding the group to the person to be updated in the people repo; redundant
         }
 
-
-        //Try1:
 //        //what i originally had
 //                Group g = groups.findOne(id);
 //                g.people.add(person);
@@ -128,7 +94,6 @@ public class FolkPileController {
             Group pb = new Group("Potential Babysitters");
             groups.save(pb);
         }
-
 
     }
 }
