@@ -21,8 +21,8 @@ public class Group {
 
     @ManyToMany
     @JoinTable
-    @JsonBackReference
-    //@JsonIgnore
+    //@JsonBackReference
+    @JsonIgnore
     List<Person> people = new ArrayList<>();
 
 
