@@ -24,7 +24,7 @@ public class Group {
     //@JsonBackReference
     List<Person> people = new ArrayList<>();
 
-    @JsonIgnore
+    //@JsonIgnore
     public List<Person> getPeople() {
         return people;
     }
